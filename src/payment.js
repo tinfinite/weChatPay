@@ -71,21 +71,36 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
               if (params.trade_type === 'JSAPI') {
                 packageVal = 'prepay_id=' + data.prepay_id;
               }
-              payParams = Object.assign({}, {
-                appid: data.appid || _this.config.appid,
-                partnerid: _this.config.mch_id,
-                prepayid: data.prepay_id,
-                timestamp: _util2.default._generateTimeStamp(),
-                noncestr: _util2.default._generateNonceStr(),
-                package: packageVal });
+              payParams = null;
+              if (params.trade_type === 'JSAPI') {
+                payParams = Object.assign({}, {
+                  appId: data.appid || _this.config.appid,
+                  timeStamp: _util2.default._generateTimeStamp(),
+                  nonceStr: _util2.default._generateNonceStr(),
+                  package: packageVal,
+                  signType: 'MD5' });
 
-              payParams.sign = _util2.default._getSign(payParams, _this.config.partner_key);
+              } else {
+                payParams = Object.assign({}, {
+                  appid: data.appid || _this.config.appid,
+                  partnerid: _this.config.mch_id,
+                  prepayid: data.prepay_id,
+                  timestamp: _util2.default._generateTimeStamp(),
+                  noncestr: _util2.default._generateNonceStr(),
+                  package: packageVal });
+
+              }
+              if (params.trade_type === 'JSAPI') {
+                payParams.paySign = _util2.default._getSign(payParams, _this.config.partner_key);
+              } else {
+                payParams.sign = _util2.default._getSign(payParams, _this.config.partner_key);
+              }
 
               if (order.trade_type === 'NATIVE') {
-                params.code_url = data.code_url;
+                payParams.code_url = data.code_url;
               }
               console.log('getReadyPayParams.result', payParams);return _context.abrupt('return',
-              payParams);case 23:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return _ref.apply(this, arguments);};}();this.
+              payParams);case 24:case 'end':return _context.stop();}}}, _callee, _this);}));return function (_x) {return _ref.apply(this, arguments);};}();this.
 
 
 
