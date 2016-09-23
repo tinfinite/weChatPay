@@ -136,12 +136,15 @@ function Payment(config) {var _this = this;(0, _classCallCheck3.default)(this, P
               default_params = {
                 nonce_str: _util2.default._generateNonceStr() // 随机字符串，不长于32位
               };
-              obj = Object.assign({}, _this.config, default_params, params);_context4.next = 4;return (
-                _this.sendRequestTWcPay(obj, URLS.ORDER_QUERY, { required: ['transaction_id|out_trade_no'] }));case 4:_ref8 = _context4.sent;error = _ref8.error;data = _ref8.data;if (!
-              error) {_context4.next = 9;break;}throw (
-                error);case 9:return _context4.abrupt('return',
+              obj = Object.assign({}, default_params, params);
+              obj.appid = _this.config.appid;
+              obj.mch_id = _this.config.mch_id;
+              console.log('query.order.params', obj);_context4.next = 7;return (
+                _this.sendRequestTWcPay(obj, URLS.ORDER_QUERY, { required: ['transaction_id|out_trade_no'] }));case 7:_ref8 = _context4.sent;error = _ref8.error;data = _ref8.data;if (!
+              error) {_context4.next = 12;break;}throw (
+                error);case 12:return _context4.abrupt('return',
 
-              data);case 10:case 'end':return _context4.stop();}}}, _callee4, _this);}));return function (_x6) {return _ref7.apply(this, arguments);};}();this.
+              data);case 13:case 'end':return _context4.stop();}}}, _callee4, _this);}));return function (_x6) {return _ref7.apply(this, arguments);};}();this.
 
 
   closeOrder = function () {var _ref9 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(params) {var _ref10, error, data;return _regenerator2.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
